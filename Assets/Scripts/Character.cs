@@ -14,7 +14,7 @@ public class Character : MonoBehaviour
     public string characterName;
     public int level;
 
-    public int dpt = 1;
+    public DieRoll dpt = new DieRoll(1, 4);
 
     public float maxHP;
     public float currentHP;
@@ -23,4 +23,5 @@ public class Character : MonoBehaviour
     public float currentMana;
 
     public SpellList[] knownSpells;
+    public List<StatusEffectSpell> currentEffects;
 }

@@ -108,8 +108,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Archer
   level: 2
-  dpt: 2
+  dpt:
+    number: 1
+    die: 6
   maxHP: 20
   currentHP: 20
   maxMana: 0
   currentMana: 0
+  knownSpells: []

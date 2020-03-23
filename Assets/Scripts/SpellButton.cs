@@ -10,12 +10,16 @@ public class SpellButton : MonoBehaviour
     {
         if (spellData.type == SpellType.OFFENSIVE)
         {
-            DamageSpell damageSpell = (DamageSpell) spellData;
-            BattleSystem.system.PlayerSpell(damageSpell.damage);
-
-            BattleSystem.system.dialogBox.FullText.SetActive(false);
-            BattleSystem.system.SpellMenu.SetActive(true);
-            BattleSystem.system.dialogBox.gridText.SetActive(false);
+            DamageSpell damageSpell = (DamageSpell)spellData;
+            BattleSystem.system.PlayerSpell(damageSpell);
+        } else if (spellData.type == SpellType.RECOVERY)
+        {
+            RecoverySpell recoverySpell = (RecoverySpell)spellData;
+            BattleSystem.system.PlayerSpell(recoverySpell);
+        } else if (spellData.type == SpellType.STATUSEFFECT)
+        {
+            StatusEffectSpell statusSpell = (StatusEffectSpell)spellData;
+            BattleSystem.system.PlayerSpell(statusSpell);
         }
     }
 }

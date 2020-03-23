@@ -108,7 +108,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Wizard
   level: 2
-  dpt: 2
+  dpt:
+    number: 1
+    die: 8
   maxHP: 20
   currentHP: 20
   maxMana: 10
@@ -116,3 +118,8 @@ MonoBehaviour:
   knownSpells:
   - lvl: 1
     spell: {fileID: 11400000, guid: 63f253c9d83d56249b3616d3932c69af, type: 2}
+  - lvl: 2
+    spell: {fileID: 11400000, guid: 00f906842db0b7049bcb8a20ce957132, type: 2}
+  - lvl: 2
+    spell: {fileID: 11400000, guid: 4bd7ff4cb67170542af7e5233eeb7c0d, type: 2}
+  currentEffects: []

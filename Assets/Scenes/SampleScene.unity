@@ -477,6 +477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FullText: {fileID: 611119005}
   gridText: {fileID: 201032695}
+  gridText2: {fileID: 2044781487}
 --- !u!1 &194812169
 GameObject:
   m_ObjectHideFlags: 0
