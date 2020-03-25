@@ -4,14 +4,14 @@ using UnityEngine;
 
 public enum SpellType
 {
-    OFFENSIVE,
-    STATUSEFFECT,
-    RECOVERY
+    Destruction,
+    Restoration,
+    StatusEffect
 }
 
 public class Spell : ScriptableObject
 {
     public string spellName;
-    public SpellType type;
-    public float manaCost;
+    public SpellType spellType;
+    public float manaCost = 1;
 }

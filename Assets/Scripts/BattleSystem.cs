@@ -1,477 +1,271 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
-public enum BattleState {
+public enum StateMachine
+{
     START,
     PLAYERTURN,
     ENERMYTURN,
-    WON,
+    WIN,
     LOST
-}
-
-[System.Serializable]
-public class DieRoll
-{
-    public int number;
-    public int die;
-
-    public DieRoll()
-    {
-        number = 0;
-        die = 0;
-    }
-
-    public DieRoll(int n, int d)
-    {
-        number = n;
-        die = d;
-    }
-
-    public int roll()
-    {
-        int sum = 0;
-
-        for (int i = 0; i < number; i++)
-        {
-            sum += Random.Range(1, die);
-        }
-
-        return sum;
-    }
 }
 
 public class BattleSystem : MonoBehaviour
 {
-    public static BattleSystem system;
-    public BattleState state;
+    public Character player1;
+    public Character AI;
 
-    public GameObject playerPrefab;
-    public GameObject enermyPrefab;
-    public GameObject SpellMenuButtonPrefab;
+    private int dmg;
+    private OptionMenu optionMenu;
+    public static BattleSystem battleSystem;
 
-    public Transform playerPlatform;
-    public Transform enermyPlatform;
+    private bool enermyTurn = false;
 
-    Character player;
-    Character enermy;
-
-    public HUD playerHUD;
-    public HUD enermyHUD;
-
-    public DialogBox dialogBox;
-    public GameObject SpellMenu;
-
-    private bool AIProcessing = false;
-
-    BattleSystem()
-    {
-        if (system == null)
-        {
-            system = this;
-        }
-        else
-        {
-            Destroy(system);
-        }
-    }
+    public StateMachine state;
 
     public void Start()
     {
-        state = BattleState.START;
-        Random.InitState(System.DateTime.Now.Millisecond);
+        state = StateMachine.START;
 
-        StartCoroutine(SetupBattle());
-    }
+        optionMenu = FindObjectOfType<OptionMenu>();
 
-    IEnumerator SetupBattle()
-    {
-        GameObject p = Instantiate(playerPrefab, playerPlatform);
-        player = p.GetComponent<Character>();
-        p = Instantiate(enermyPrefab, enermyPlatform);
-        enermy = p.GetComponent<Character>();
-
-        playerHUD.SetGUI(player);
-        enermyHUD.SetGUI(enermy);
-
-        foreach (SpellList sl in player.knownSpells)
+        if (battleSystem == null)
         {
-            GameObject button = Instantiate(SpellMenuButtonPrefab, SpellMenu.transform);
-            TextMeshProUGUI meshPro = button.GetComponentInChildren<TextMeshProUGUI>();
-            meshPro.SetText(sl.spell.spellName);
-            button.GetComponent<SpellButton>().spellData = sl.spell;
+            battleSystem = this;
+        } else
+        {
+            Destroy(this);
         }
 
-        dialogBox.setFullText("You are challanged by " + enermy.characterName);
+        StartCoroutine(StartGame());
+
+        state = StateMachine.PLAYERTURN;
+
+        optionMenu.SetSpells(player1.knownSpell);
+    }
+
+    private IEnumerator StartGame()
+    {
+        optionMenu.SetFullText(AI.characterName + " appeared!!");
 
         yield return new WaitForSeconds(2f);
 
-        state = BattleState.PLAYERTURN;
-
-        dialogBox.FullText.SetActive(false);
-        SpellMenu.SetActive(false);
-        dialogBox.gridText.SetActive(true);
-    }
-
-    IEnumerator PlayerAttackSetText()
-    {
-        float hit = (new DieRoll(1, 20)).roll();
-
-        if (hit == 1)
-        {
-            dialogBox.setFullText(player.characterName + " missed");
-
-            yield return new WaitForSeconds(2f);
-
-            state = BattleState.ENERMYTURN;
-
-            dialogBox.FullText.SetActive(false);
-            SpellMenu.SetActive(false);
-            dialogBox.gridText.SetActive(false);
-        }
-        else
-        {
-            float damage = player.dpt.roll();
-            if (hit == 20)
-            {
-                damage += player.dpt.roll();
-            }
-            enermy.currentHP -= damage;
-
-            dialogBox.setFullText(player.characterName + " Attacks and does " + damage + " dmg");
-
-            yield return new WaitForSeconds(2f);
-
-            enermyHUD.SetHP(enermy.currentHP);
-            state = BattleState.ENERMYTURN;
-
-            dialogBox.FullText.SetActive(false);
-            SpellMenu.SetActive(false);
-            dialogBox.gridText.SetActive(true);
-        }
-
-        dialogBox.FullText.SetActive(false);
-        SpellMenu.SetActive(false);
-        dialogBox.gridText.SetActive(true);
-    }
-
-    public void PlayerAttack()
-    {
-        if (state != BattleState.PLAYERTURN) {
-            return;
-        }
-
-        StartCoroutine(PlayerAttackSetText());
-    }
-
-    public void PlayerSelectSpell()
-    {
-        dialogBox.FullText.SetActive(false);
-        SpellMenu.SetActive(true);
-        dialogBox.gridText.SetActive(false);
-    }
-
-    public void SpellBack()
-    {
-        dialogBox.FullText.SetActive(false);
-        SpellMenu.SetActive(false);
-        dialogBox.gridText.SetActive(true);
-    }
-
-    public IEnumerator UpdateStatus(Character character)
-    {
-        foreach(StatusEffectSpell spell in character.currentEffects) {
-            if (spell.isDamaging)
-            {
-                float damage = spell.damage.roll();
-                dialogBox.setFullText(character.characterName + " take " + damage + " damage by poison");
-                yield return new WaitForSeconds(2f);
-
-                character.currentHP -= damage;
-                playerHUD.SetHP(player.currentHP);
-                enermyHUD.SetHP(enermy.currentHP);
-
-                dialogBox.FullText.SetActive(false);
-                SpellMenu.SetActive(false);
-                dialogBox.gridText.SetActive(true);
-            }
-        }
-    }
-
-    IEnumerator PlayerSpellHealSetText(string name, float hitpoint, float cost)
-    {
-        float hit = (new DieRoll(1, 20)).roll();
-
-        if (hit == 1)
-        {
-            dialogBox.setFullText(player.characterName + " missed");
-
-            yield return new WaitForSeconds(2f);
-
-            state = BattleState.ENERMYTURN;
-
-            dialogBox.FullText.SetActive(false);
-            SpellMenu.SetActive(false);
-            dialogBox.gridText.SetActive(false);
-        }
-        else
-        {
-            player.currentHP += hitpoint;
-
-            dialogBox.setFullText(player.characterName + " cast " + name + " and recovers " + hitpoint + " hitpoints");
-
-            yield return new WaitForSeconds(2f);
-
-            player.currentMana -= cost;
-
-            playerHUD.SetMana(player.currentMana);
-            state = BattleState.ENERMYTURN;
-
-            dialogBox.FullText.SetActive(false);
-            SpellMenu.SetActive(false);
-            dialogBox.gridText.SetActive(true);
-        }
-
-        StartCoroutine(UpdateStatus(player));
-
-        dialogBox.FullText.SetActive(false);
-        SpellMenu.SetActive(false);
-        dialogBox.gridText.SetActive(true);
-    }
-
-    IEnumerator PlayerSpellStatusSetText(StatusEffectSpell spell)
-    {
-        float hit = (new DieRoll(1, 20)).roll();
-
-        if (hit == 1)
-        {
-            dialogBox.setFullText(player.characterName + " missed");
-
-            yield return new WaitForSeconds(2f);
-
-            state = BattleState.ENERMYTURN;
-
-            dialogBox.FullText.SetActive(false);
-            SpellMenu.SetActive(false);
-            dialogBox.gridText.SetActive(false);
-        }
-        else
-        {
-            dialogBox.setFullText(player.characterName + " cast " + spell.spellName + " on " + enermy.characterName);
-
-            yield return new WaitForSeconds(2f);
-
-            player.currentMana -= spell.manaCost;
-
-            playerHUD.SetMana(player.currentMana);
-            enermy.currentEffects.Add(spell);
-            state = BattleState.ENERMYTURN;
-
-            dialogBox.FullText.SetActive(false);
-            SpellMenu.SetActive(false);
-            dialogBox.gridText.SetActive(true);
-        }
-
-        StartCoroutine(UpdateStatus(player));
-
-        dialogBox.FullText.SetActive(false);
-        SpellMenu.SetActive(false);
-        dialogBox.gridText.SetActive(true);
-    }
-
-    IEnumerator PlayerSpellSetText(string name, float damage, float cost)
-    {
-        float hit = (new DieRoll(1, 20)).roll();
-
-        if (hit == 1)
-        {
-            dialogBox.setFullText(player.characterName + " missed");
-
-            yield return new WaitForSeconds(2f);
-
-            state = BattleState.ENERMYTURN;
-
-            dialogBox.FullText.SetActive(false);
-            SpellMenu.SetActive(false);
-            dialogBox.gridText.SetActive(false);
-        }
-        else
-        {
-            enermy.currentHP -= damage;
-
-            dialogBox.setFullText(player.characterName + " cast " + name + " and does " + damage + " dmg");
-
-            yield return new WaitForSeconds(2f);
-
-            player.currentMana -= cost;
-
-            enermyHUD.SetHP(enermy.currentHP);
-            playerHUD.SetMana(player.currentMana);
-            state = BattleState.ENERMYTURN;
-
-            dialogBox.FullText.SetActive(false);
-            SpellMenu.SetActive(false);
-            dialogBox.gridText.SetActive(true);
-        }
-
-        StartCoroutine(UpdateStatus(player));
-
-        dialogBox.FullText.SetActive(false);
-        SpellMenu.SetActive(false);
-        dialogBox.gridText.SetActive(true);
-    }
-
-    public void PlayerSpell(DamageSpell spell)
-    {
-        if (state != BattleState.PLAYERTURN)
-        {
-            return;
-        }
-
-        StartCoroutine(PlayerSpellSetText(spell.spellName, spell.damage.roll(), spell.manaCost));
-    }
-
-    public void PlayerSpell(RecoverySpell spell)
-    {
-        if (state != BattleState.PLAYERTURN)
-        {
-            return;
-        }
-
-        StartCoroutine(PlayerSpellHealSetText(spell.spellName, spell.hitpoints.roll(), spell.manaCost));
-    }
-
-    public void PlayerSpell(StatusEffectSpell spell)
-    {
-        if (state != BattleState.PLAYERTURN)
-        {
-            return;
-        }
-
-        StartCoroutine(PlayerSpellStatusSetText(spell));
-    }
-
-    IEnumerator EnermyAttackSetText()
-    {
-        float hit = (new DieRoll(1, 20)).roll();
-
-        if (hit == 1) {
-            dialogBox.setFullText(enermy.characterName + " missed");
-
-            yield return new WaitForSeconds(2f);
-
-            state = BattleState.PLAYERTURN;
-
-            dialogBox.FullText.SetActive(false);
-            SpellMenu.SetActive(false);
-            dialogBox.gridText.SetActive(false);
-        }
-        else
-        {
-            float damage = enermy.dpt.roll();
-            if (hit == 20)
-            {
-                damage += enermy.dpt.roll();
-            }
-            player.currentHP -= damage;
-
-            dialogBox.setFullText(enermy.characterName + " Attacks and does " + damage + " dmg");
-
-            yield return new WaitForSeconds(2f);
-
-            playerHUD.SetHP(player.currentHP);
-            state = BattleState.PLAYERTURN;
-
-            dialogBox.FullText.SetActive(false);
-            SpellMenu.SetActive(false);
-            dialogBox.gridText.SetActive(false);
-        }
-
-        StartCoroutine(UpdateStatus(enermy));
-
-        AIProcessing = false;
-        dialogBox.FullText.SetActive(false);
-        SpellMenu.SetActive(false);
-        dialogBox.gridText.SetActive(true);
-    }
-
-    public void EnermyAttack()
-    {
-
-        StartCoroutine(EnermyAttackSetText());
-        StartCoroutine(UpdateStatus(enermy));
-    }
-
-    IEnumerator EnermyAttackSpellSetText()
-    {
-        float hit = (new DieRoll(1, 20)).roll();
-        if (hit == 1)
-        {
-            dialogBox.setFullText(enermy.characterName + " missed");
-
-            yield return new WaitForSeconds(2f);
-
-            state = BattleState.PLAYERTURN;
-
-            dialogBox.FullText.SetActive(false);
-            SpellMenu.SetActive(false);
-            dialogBox.gridText.SetActive(false);
-        } else
-        {
-            float damage = enermy.dpt.roll();
-            if (hit == 20)
-            {
-                damage += enermy.dpt.roll();
-            }
-
-            player.currentHP -= damage;
-            enermy.currentMana -= 1;
-
-            dialogBox.setFullText(enermy.characterName + " Attacks and does " + damage + " dmg");
-
-            yield return new WaitForSeconds(2f);
-
-            playerHUD.SetHP(player.currentHP);
-            enermyHUD.SetMana(enermy.currentMana);
-            state = BattleState.PLAYERTURN;
-
-            dialogBox.FullText.SetActive(false);
-            SpellMenu.SetActive(false);
-            dialogBox.gridText.SetActive(false);
-        }
-
-        StartCoroutine(UpdateStatus(enermy));
-
-        AIProcessing = false;
-        dialogBox.FullText.SetActive(false);
-        SpellMenu.SetActive(false);
-        dialogBox.gridText.SetActive(true);
-    }
-
-    public void EnermyAttackSpell()
-    {
-        StartCoroutine(EnermyAttackSpellSetText());
-        StartCoroutine(UpdateStatus(enermy));
+        optionMenu.ActiveOption1();
     }
 
     public void Update()
     {
-        if (state == BattleState.ENERMYTURN)
+        if (state == StateMachine.LOST)
         {
-            if (AIProcessing)
-            {
-                return;
-            }
-            AIProcessing = true;
-    
-            if (enermy.currentMana > 0)
-            {
-                EnermyAttackSpell();
-            } else
-            {
-                EnermyAttack();
-            }
+            optionMenu.SetFullText("You Lost");
+        } else if (state == StateMachine.WIN)
+        {
+            optionMenu.SetFullText("You Win");
         }
+    }
+
+    public IEnumerator nextTurn()
+    {
+        if (state == StateMachine.PLAYERTURN)
+        {
+            if (player1.activeStatus.Count > 0)
+            {
+                foreach(StatusEffectSpell s in player1.activeStatus)
+                {
+                    dmg = s.damageOverTime.roll();
+                    optionMenu.SetFullText(player1.characterName + " takes "+ dmg + " due to " + s.spellName);
+
+                    yield return new WaitForSeconds(2f);
+
+                    player1.TakeDamage(dmg);
+                }
+            }
+            state = StateMachine.ENERMYTURN;
+            AIAttack();
+        } else if (state == StateMachine.ENERMYTURN)
+        {
+            if (AI.activeStatus.Count > 0)
+            {
+                foreach (StatusEffectSpell s in AI.activeStatus)
+                {
+                    dmg = s.damageOverTime.roll();
+                    optionMenu.SetFullText(AI.characterName + " takes " + dmg + " due to " + s.spellName);
+
+                    yield return new WaitForSeconds(2f);
+
+                    AI.TakeDamage(dmg);
+                }
+            }
+            state = StateMachine.PLAYERTURN;
+            optionMenu.ActiveOption1();
+        }
+    }
+
+    public IEnumerator PlayerCharge(float regain)
+    {
+        optionMenu.SetFullText(player1.characterName + " is charging");
+
+        yield return new WaitForSeconds(2f);
+
+        player1.SetMana(-regain);
+        UpdateTurn();
+    }
+
+    public void UpdateTurn()
+    {
+        if (AI.hitpoint <= 0) { 
+            state = StateMachine.WIN;
+            return;
+        } else if (player1.hitpoint <= 0)
+        {
+            state = StateMachine.LOST;
+            return;
+        }
+        StartCoroutine(nextTurn());
+    }
+
+    IEnumerator PlayerCastDestructionSpellTxt(DestructionSpell destructionSpell)
+    {
+        if (player1.mana - destructionSpell.manaCost < 0)
+        {
+            optionMenu.SetFullText(player1.characterName + " is out of mana");
+            yield return new WaitForSeconds(2f);
+        } else {
+            dmg = destructionSpell.damage.roll();
+            optionMenu.SetFullText(player1.characterName + " cast " + destructionSpell.spellName + " and did " + dmg + " damage");
+            yield return new WaitForSeconds(2f);
+
+            player1.TriggerSpellAnimation();
+            yield return new WaitForSeconds(2f);
+
+            player1.SetMana(destructionSpell.manaCost);
+        }
+
+        StartCoroutine(PlayerAnimationEnd());
+    }
+
+    public void PlayerCastSpell(DestructionSpell destructionSpell)
+    {
+        StartCoroutine(PlayerCastDestructionSpellTxt(destructionSpell));
+    }
+
+    IEnumerator PlayerCastRestorationSpellTxt(RestorationSpell spell)
+    {
+        if (player1.mana - spell.manaCost < 0)
+        {
+            optionMenu.SetFullText(player1.characterName + " is out of mana");
+            yield return new WaitForSeconds(2f);
+        } else
+        {
+            float hp = spell.hitpoint.roll();
+            optionMenu.SetFullText(player1.characterName + " cast " + spell.spellName + " and restore " + hp + " hitpoint");
+            yield return new WaitForSeconds(2f);
+
+            player1.TriggerSpellAnimation();
+            yield return new WaitForSeconds(2f);
+
+            player1.SetMana(spell.manaCost);
+            player1.TakeDamage(-hp);
+        }
+
+        StartCoroutine(PlayerAnimationEnd());
+    }
+
+    public void PlayerCastSpell(RestorationSpell restorationSpell)
+    {
+        StartCoroutine(PlayerCastRestorationSpellTxt(restorationSpell));
+    }
+
+    IEnumerator PlayerCastStatusEffectSpellTxt(StatusEffectSpell spell)
+    {
+        if (player1.mana - spell.manaCost < 0)
+        {
+            optionMenu.SetFullText(player1.characterName + " is out of mana");
+            yield return new WaitForSeconds(2f);
+        } else
+        {
+            optionMenu.SetFullText(player1.characterName + " cast " + spell.spellName + " and poisoned " + AI.characterName);
+            yield return new WaitForSeconds(2f);
+
+            player1.TriggerSpellAnimation();
+            yield return new WaitForSeconds(2f);
+
+            player1.SetMana(spell.manaCost);
+            AI.activeStatus.Add(spell);
+        }        
+        
+        StartCoroutine(PlayerAnimationEnd());
+    }
+
+    public void PlayerCastSpell(StatusEffectSpell spell)
+    {
+        StartCoroutine(PlayerCastStatusEffectSpellTxt(spell));
+    }
+
+    IEnumerator AIAttackTxt(int dmg)
+    {
+        optionMenu.SetFullText(AI.characterName + " attacked and did " + dmg + " damage");
+        yield return new WaitForSeconds(2f);
+        AI.TriggerAttackAnimation();
+
+        StartCoroutine(AIAnimationEnd());
+    }
+
+    public void AIAttack()
+    {
+        dmg = AI.Attack();
+        StartCoroutine(AIAttackTxt(dmg));
+    }
+
+    IEnumerator PlayerAttackTxt(int dmg)
+    {
+        optionMenu.SetFullText(player1.characterName + " attacked and did " + dmg + " damage");
+        yield return new WaitForSeconds(2f);
+        player1.TriggerAttackAnimation();
+
+        StartCoroutine(PlayerAnimationEnd());
+    }
+
+    public void PlayerAttack()
+    {
+        dmg = player1.Attack();
+        StartCoroutine(PlayerAttackTxt(dmg));
+    }
+
+    public IEnumerator PlayerAnimationEnd()
+    {
+        yield return new WaitForSeconds(2f);
+
+        AI.TakeDamage(dmg);
+        dmg = 0;
+
+        UpdateTurn();
+    }
+
+    public IEnumerator AIAnimationEnd()
+    {
+        yield return new WaitForSeconds(2f);
+
+        player1.TakeDamage(dmg);
+        dmg = 0;
+
+        UpdateTurn();
+    }
+
+    public void AttackAnimationEnd()
+    {
+        if (state == StateMachine.PLAYERTURN)
+        {
+            AI.TakeDamage(dmg);
+            dmg = 0;
+        }
+        else if (state == StateMachine.ENERMYTURN)
+        {
+            player1.TakeDamage(dmg);
+            dmg = 0;
+        }
+
+        UpdateTurn();
     }
 }

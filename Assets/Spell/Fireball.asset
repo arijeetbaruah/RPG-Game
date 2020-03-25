@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c1b02e485f1ea949a5d1864eff87305, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e47e64e50869ab4cb89175d80534697, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: 
-  spellName: Fireball
-  type: 0
-  manaCost: 3
+  spellName: fireball
+  spellType: 0
+  manaCost: 1
   damage:
     number: 1
-    die: 10
+    die: 8

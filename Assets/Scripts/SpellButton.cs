@@ -1,25 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SpellButton : MonoBehaviour
 {
-    public Spell spellData;
+    public Spell spell;
+
+    public void Awake()
+    {
+        TextMeshProUGUI text = GetComponent<TextMeshProUGUI>();
+        text.SetText(spell.spellName);
+    }
 
     public void Cast()
     {
-        if (spellData.type == SpellType.OFFENSIVE)
+        if (spell.spellType == SpellType.Destruction)
         {
-            DamageSpell damageSpell = (DamageSpell)spellData;
-            BattleSystem.system.PlayerSpell(damageSpell);
-        } else if (spellData.type == SpellType.RECOVERY)
+            DestructionSpell destructionSpell = (DestructionSpell)spell;
+            BattleSystem.battleSystem.PlayerCastSpell(destructionSpell);
+        } else if (spell.spellType == SpellType.Restoration)
         {
-            RecoverySpell recoverySpell = (RecoverySpell)spellData;
-            BattleSystem.system.PlayerSpell(recoverySpell);
-        } else if (spellData.type == SpellType.STATUSEFFECT)
+            RestorationSpell restorationSpell = (RestorationSpell)spell;
+            BattleSystem.battleSystem.PlayerCastSpell(restorationSpell);
+        } else if (spell.spellType == SpellType.StatusEffect)
         {
-            StatusEffectSpell statusSpell = (StatusEffectSpell)spellData;
-            BattleSystem.system.PlayerSpell(statusSpell);
+            StatusEffectSpell statusEffectSpell = (StatusEffectSpell)spell;
+            BattleSystem.battleSystem.PlayerCastSpell(statusEffectSpell);
         }
     }
 }
