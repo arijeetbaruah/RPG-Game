@@ -1,0 +1,317 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7150768696918026871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Background.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/audio/audiofile/Build/Desktop/Background.bank
+  SubDir: 
+  lastModified: 637207565410151246
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
+--- !u!114 &-6682265533057353728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BattleBg
+  m_EditorClassIdentifier: 
+  Path: event:/BattleBg
+  guid: 073e71e89070ae448abcc9280223f8e0
+  Banks:
+  - {fileID: -7150768696918026871}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 28800
+--- !u!114 &-5441830311998884845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/audio/audiofile/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637207558006242396
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-5097445399355637397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/attack.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/audio/audiofile/Build/Desktop/attack.bank
+  SubDir: 
+  lastModified: 637207565410889245
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
+--- !u!114 &-4384189826539582674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Background.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/audio/audiofile/Build/Desktop/Background.bank
+  SubDir: 
+  lastModified: 637207536380162366
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-4224486585391392296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/audio/audiofile/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637207554455027484
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-3950186206688888845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Background.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/audio/audiofile/Build/Desktop/Background.bank
+  SubDir: 
+  lastModified: 637207554455256760
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-1766153173955866988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/attack.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/audio/audiofile/Build/Desktop/attack.bank
+  SubDir: 
+  lastModified: 637207558006870719
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-1546802100171228238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/spellAttack
+  m_EditorClassIdentifier: 
+  Path: event:/spellAttack
+  guid: 8667060d3395a7489ec51202c6518d16
+  Banks:
+  - {fileID: -5097445399355637397}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1843
+--- !u!114 &-259638904566206550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/audio/audiofile/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637207536370499116
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: 2221476162489505992}
+  - {fileID: -5097445399355637397}
+  - {fileID: -7150768696918026871}
+  - {fileID: 8492136261031970903}
+  EditorEvents:
+  - {fileID: -6682265533057353728}
+  - {fileID: 8717461291330884112}
+  - {fileID: -1546802100171228238}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: 8492136261031970903}
+  StringsBanks:
+  - {fileID: 2221476162489505992}
+  stringsBankWriteTime: 637207565409971692
+  cacheVersion: 3
+--- !u!114 &2221476162489505992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/audio/audiofile/Build/Desktop/Master.strings.bank
+  SubDir: 
+  lastModified: 637207565409971692
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 920
+  Exists: 1
+--- !u!114 &2899682012797032026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Background.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/audio/audiofile/Build/Desktop/Background.bank
+  SubDir: 
+  lastModified: 637207558006451834
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &4006189060791577915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/audio/audiofile/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637207534805245116
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &8492136261031970903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/audio/audiofile/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637207565409961723
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
+--- !u!114 &8717461291330884112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/playerAttack
+  m_EditorClassIdentifier: 
+  Path: event:/playerAttack
+  guid: 730c328e9aa8a34fb1b6fb214e9ebd08
+  Banks:
+  - {fileID: -5097445399355637397}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 124

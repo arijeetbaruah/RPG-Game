@@ -60,6 +60,14 @@ public class Character : MonoBehaviour
 
     private Animator animator;
 
+    [FMODUnity.EventRef]
+    public string attackEvent;
+    [FMODUnity.EventRef]
+    public string spellEvent;
+
+    public FMOD.Studio.EventInstance attackAudioState;
+    public FMOD.Studio.EventInstance spellAudioState;
+
     public Spell[] knownSpell;
     public List<StatusEffectSpell> activeStatus;
 
@@ -82,6 +90,9 @@ public class Character : MonoBehaviour
         lvlText.SetText("lvl " + level);
 
         animator = GetComponent<Animator>();
+
+        attackAudioState = FMODUnity.RuntimeManager.CreateInstance(attackEvent);
+        spellAudioState = FMODUnity.RuntimeManager.CreateInstance(spellEvent);
 
         UpdateMods();
     }
@@ -114,6 +125,11 @@ public class Character : MonoBehaviour
     public void TriggerSpellAnimation()
     {
         animator.SetTrigger("spell");
+    }
+
+    public void PlayAttackAudio()
+    {
+        attackAudioState.start();
     }
 
     public int Attack()

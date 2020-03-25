@@ -194,7 +194,8 @@ public class BattleSystem : MonoBehaviour
             player1.SetMana(spell.manaCost);
             AI.activeStatus.Add(spell);
         }        
-        
+        player1.PlayAttackAudio();
+
         StartCoroutine(PlayerAnimationEnd());
     }
 
@@ -223,6 +224,7 @@ public class BattleSystem : MonoBehaviour
         optionMenu.SetFullText(player1.characterName + " attacked and did " + dmg + " damage");
         yield return new WaitForSeconds(2f);
         player1.TriggerAttackAnimation();
+        player1.PlayAttackAudio();
 
         StartCoroutine(PlayerAnimationEnd());
     }
