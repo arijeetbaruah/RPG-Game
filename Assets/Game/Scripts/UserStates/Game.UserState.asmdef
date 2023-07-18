@@ -1,0 +1,18 @@
+{
+    "name": "Game.UserState",
+    "rootNamespace": "Game.UserState",
+    "references": [
+        "GUID:c79a216f34aa0fe4f90500eae9a5081e",
+        "GUID:ff51bed9c2032154a9ac0c648ff95961",
+        "GUID:8a0edda307fd4b04a8ec146359aa542b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
